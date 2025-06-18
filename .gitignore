@@ -1,2 +1,7 @@
 platform-env/
 test.py
+
+__pycache__/
+src/agents/understaning/__pycache__/
+src/agents/__pycache__/
+tools/database/__pycache__
