@@ -4,6 +4,11 @@ platform-env/
 test.py
 
 __pycache__/
+src/agents/question/__pycache__
+src/agents/platform/__pycache__
 src/agents/understaning/__pycache__/
 src/agents/__pycache__/
+tools/key/__pycache__
+tools/llm/__pycache__
 tools/database/__pycache__
+tools/embeddings/__pycache__

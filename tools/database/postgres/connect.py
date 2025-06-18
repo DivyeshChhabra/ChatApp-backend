@@ -8,10 +8,10 @@ from config import load_env_vars
 load_env_vars()
 
 # Define your PostgreSQL database URL
-host = os.getenv("host").replace("/", "%2F")
-database = os.getenv("database").replace("/", "%2F")
-username = os.getenv("username").replace("/", "%2F")
-password = os.getenv("password").replace("/", "%2F")
+host = os.getenv("host").replace("/", "%2F").replace("@", "%40")
+database = os.getenv("database").replace("/", "%2F").replace("@", "%40")
+username = os.getenv("username").replace("/", "%2F").replace("@", "%40")
+password = os.getenv("password").replace("/", "%2F").replace("@", "%40")
 port = os.getenv("port")
 
 __DATABASE_URL = f"postgresql://{username}:{password}@{host}:{port}/{database}"

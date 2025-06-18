@@ -11,8 +11,6 @@ from src.agents import UnderstandingAgent, QuestionAgent, PlatformAgent
 class AnalyticState(TypedDict):
     messages: List[Tuple[str, Any]] = []
 
-    client_id: str
-
     initial_question: str
     current_understanding: str
     final_question: str
@@ -22,10 +20,9 @@ class AnalyticState(TypedDict):
 
 def generate_understanding(state: AnalyticState):
     initial_question = state["initial_question"]
-    client_id = state["client_id"]
     messages = state["messages"] if "messages" in state else list()
 
-    understanding_agent = UnderstandingAgent(client_id = client_id)
+    understanding_agent = UnderstandingAgent()
     current_understanding = understanding_agent.update_understanding(question = initial_question, messages = messages)
 
     return {
@@ -36,9 +33,8 @@ def generate_understanding(state: AnalyticState):
 def get_question(state: AnalyticState):
     initial_question = state["initial_question"]
     current_understanding = state["current_understanding"]
-    client_id = state["client_id"]
 
-    question_agent = QuestionAgent(client_id = client_id)
+    question_agent = QuestionAgent()
     final_question = question_agent.generate_question(question = initial_question, current_understanding = current_understanding)
 
     return {
@@ -48,10 +44,9 @@ def get_question(state: AnalyticState):
 
 def get_answer(state: AnalyticState):
     question = state["final_question"]
-    client_id = state["client_id"]
     messages = state["messages"] if "messages" in state else list()
 
-    platform_agent = PlatformAgent(client_id = client_id, question = question, messages = messages)
+    platform_agent = PlatformAgent(question = question, messages = messages)
     answer = platform_agent.acknowledge(question)
 
     messages.append((question, answer))

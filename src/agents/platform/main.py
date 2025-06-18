@@ -27,13 +27,13 @@ class Acknowledge(BaseModel):
     )
 
 class PlatformAgent:
-    def __init__(self, client_id, question, messages):
+    def __init__(self, question, messages):
         # Initialize the Agent.
         __agent = config["Agents"]["platform"]
 
 
         # Getting the system prompt.
-        __system_prompt = get_system_prompt(agent_name = __agent["Name"], client_id = client_id)
+        __system_prompt = get_system_prompt(agent_name = __agent["Name"])
 
         # Getting the relevant information via RAG.
         if not messages:
@@ -61,28 +61,10 @@ class PlatformAgent:
         self.chat_model = __llm_model.with_structured_output(Acknowledge)
 
 
-        # Defining the platform agent.
-        run_id = str(uuid.uuid4())
-        self.__trace(client_id = client_id, run_id = run_id, agent_id = __agent["ID"])
         # Creating the chain.
-        self.chain = (self.platform_prompt | self.chat_model).with_config({"run_id": run_id})
+        self.chain = (self.platform_prompt | self.chat_model)
 
 
     def acknowledge(self, question) -> Acknowledge:
         response = self.chain.invoke({"question": [("user", question)]})
         return response.response
-
-
-    def __trace(self, client_id: int, run_id: str, agent_id: int):
-        """Trace the understanding agent"""
-
-        try:
-            # Create a new trace in the database
-            insert_query = f'''
-                INSERT INTO public.agent_run_history(client_id, run_id, agent_id)
-                VALUES ({client_id}, '{run_id}', {agent_id})
-            '''
-
-            create(insert_query = insert_query)
-        except Exception as exception:
-            raise exception

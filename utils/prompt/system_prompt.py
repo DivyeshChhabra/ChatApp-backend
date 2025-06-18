@@ -11,15 +11,14 @@ def __update_document(data):
 
 
 # Getting the system prompt from the database.
-def get_system_prompt(agent_name, client_id):
+def get_system_prompt(agent_name):
     session = SessionLocal()
 
     agent_details = session.query(
                         Agent
                     ).filter(
                         and_(
-                            Agent.name == agent_name,
-                            Agent.client_id == client_id
+                            Agent.name == agent_name
                         )
                     ).first()
 

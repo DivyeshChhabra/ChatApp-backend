@@ -26,13 +26,13 @@ class GenerateQuestion(BaseModel):
 class QuestionAgent:
     """Agent responsible in generating questions"""
 
-    def __init__(self, client_id):
+    def __init__(self):
         # Initialize the Agent.
         __agent = config["Agents"]["question"]
 
 
         # Getting the system prompt.
-        __system_prompt = get_system_prompt(agent_name = __agent["Name"], client_id = client_id)
+        __system_prompt = get_system_prompt(agent_name = __agent["Name"])
 
         self.question_prompt = ChatPromptTemplate.from_messages([
                                     ("system", __system_prompt),
@@ -52,11 +52,8 @@ class QuestionAgent:
         self.chat_model = __llm_model.with_structured_output(GenerateQuestion)
 
 
-        # Defining the question agent.
-        run_id = str(uuid.uuid4())
-        self.__trace(client_id = client_id, run_id = run_id, agent_id = __agent["ID"])
         # Creating the chain.
-        self.chain = (self.question_prompt | self.chat_model).with_config({"run_id": run_id})
+        self.chain = (self.question_prompt | self.chat_model)
 
 
     def generate_question(self, question, current_understanding) -> GenerateQuestion:
@@ -66,18 +63,3 @@ class QuestionAgent:
                 "question": question
             }
         )
-
-
-    def __trace(self, client_id: int, run_id: str, agent_id: int):
-        """Trace the understanding agent"""
-
-        try:
-            # Create a new trace in the database
-            insert_query = f'''
-                INSERT INTO public.agent_run_history(client_id, run_id, agent_id)
-                VALUES ({client_id}, '{run_id}', {agent_id})
-            '''
-
-            create(insert_query = insert_query)
-        except Exception as exception:
-            raise exception
