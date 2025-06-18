@@ -1,32 +1,25 @@
 {
     "Agents" : {
+        "platform" : {
+            "ID" : 1,
+            "Name" : "platform",
+            "LLM" : "open_ai",
+            "LLM Model" : "o3-mini",
+            "Temperature" : 0
+        },
         "understanding" : {
-            "ID" : 13,
+            "ID" : 2,
             "Name" : "understanding",
             "LLM" : "open_ai",
             "LLM Model" : "o3-mini",
             "Temperature" : 0
         },
         "question" : {
-            "ID" : 14,
+            "ID" : 3,
             "Name" : "question",
             "LLM" : "open_ai",
             "LLM Model" : "o3-mini",
             "Temperature" : 0
-        },
-        "platform" : {
-            "ID" : 12,
-            "Name" : "platform",
-            "LLM" : "open_ai",
-            "LLM Model" : "o3-mini",
-            "Temperature" : 0
-        }
-    },
-    "Tools" : {
-        "search" : {
-            "tavily" : {
-                "max_results" : 5
-            }
         }
     }
 }
