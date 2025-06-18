@@ -1,0 +1,32 @@
+{
+    "Agents" : {
+        "understanding" : {
+            "ID" : 13,
+            "Name" : "understanding",
+            "LLM" : "open_ai",
+            "LLM Model" : "o3-mini",
+            "Temperature" : 0
+        },
+        "question" : {
+            "ID" : 14,
+            "Name" : "question",
+            "LLM" : "open_ai",
+            "LLM Model" : "o3-mini",
+            "Temperature" : 0
+        },
+        "platform" : {
+            "ID" : 12,
+            "Name" : "platform",
+            "LLM" : "open_ai",
+            "LLM Model" : "o3-mini",
+            "Temperature" : 0
+        }
+    },
+    "Tools" : {
+        "search" : {
+            "tavily" : {
+                "max_results" : 5
+            }
+        }
+    }
+}
