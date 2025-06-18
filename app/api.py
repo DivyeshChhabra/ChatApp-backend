@@ -27,7 +27,7 @@ async def read_root() -> dict:
     return {"message": "Welcome to Platform!"}
 
 
-@app.post("/api/v1/chat/{chat_id}", dependencies=[Depends(JWTBearer())])
+@app.post("/api/v1/chat/{chat_id}")
 async def graph_stream(chat_id: str, request: ConversationRequest):
     body = request.body
 
